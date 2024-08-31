@@ -1,0 +1,17 @@
+all: execution
+	res
+test: execution
+	res -R 1:2:-2.0:-0.25:0.000001:-0.371819
+	res -R 1:3:-7.0:-6.0:0.000001:-6.003705
+	res -R 2:3:-4.0:-3.0:0.000001:-3.436492
+	res -I 1:-6.003705:-0.371819:0.001:11.950596
+	res -I 2:-3.436492:-0.371819:0.001:2.223597
+	res -I 3:-6.003705:-3.436492:0.001:2.943614
+execution: main.o funcs.o
+	gcc main.o funcs.o -o res
+funcs.o: funcs.s
+	gcc -c funcs.s -o funcs.o
+main.o: main.c
+	gcc -c main.c -o main.o
+clean:
+	del -sf *.o
